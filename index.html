@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WOLFY si Serigala | Proyek Multimedia</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;700;800;900&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Nunito', 'Segoe UI', sans-serif;
+    background:
+      radial-gradient(circle at 12% 20%, rgba(255,255,255,.55) 0 26px, transparent 27px),
+      radial-gradient(circle at 88% 64%, rgba(255,255,255,.45) 0 34px, transparent 35px),
+      radial-gradient(circle at 78% 12%, rgba(255,255,255,.4) 0 18px, transparent 19px),
+      linear-gradient(180deg, #9be3ff 0%, #cdeffd 34%, #fef3c7 78%, #ffe9ec 100%);
+    color: #22304f; min-height: 100vh;
+  }
+  .container { max-width: 920px; margin: 0 auto; padding: 30px 18px 56px; position: relative; }
+  .jejak { position: absolute; font-size: 22px; opacity: .35; transform: rotate(-18deg); pointer-events: none; }
+
+  header { text-align: center; margin-bottom: 8px; }
+  header h1 {
+    font-family: 'Fredoka', sans-serif; font-weight: 700; font-size: 2.7rem;
+    letter-spacing: 1px; color: #22304f;
+    text-shadow: 3px 3px 0 #ffd93d;
+    animation: melayang 3s ease-in-out infinite;
+    display: inline-block;
+  }
+  @keyframes melayang { 0%,100% { transform: translateY(0) rotate(-1deg); } 50% { transform: translateY(-6px) rotate(1deg); } }
+  header p { font-weight: 800; color: #47609c; margin-top: 2px; font-size: 1.05rem; }
+  .identitas { text-align: center; color: #6b7ea6; font-weight: 700; font-size: .9rem; margin: 8px 0 20px; }
+  .stiker-bar { text-align: center; margin-bottom: 14px; }
+  .stiker {
+    display: inline-block; font-family: 'Fredoka', sans-serif; font-weight: 600;
+    padding: 6px 16px; border-radius: 999px; border: 3px solid #22304f;
+    box-shadow: 3px 3px 0 #22304f; margin: 0 5px; font-size: .92rem; background: #fff;
+  }
+  .stiker.pink { background: #ffb3d9; transform: rotate(-3deg); }
+  .stiker.hijau { background: #b8f1cc; transform: rotate(2deg); }
+  .stiker.kuning { background: #ffe066; transform: rotate(-1deg); }
+
+  /* ---------- Panggung (diorama malam di dalam kartu playful) ---------- */
+  #bingkai {
+    background: #fff; border: 4px solid #22304f; border-radius: 26px;
+    box-shadow: 10px 10px 0 #22304f; padding: 12px; position: relative;
+  }
+  #panggung {
+    position: relative; width: 100%; aspect-ratio: 16/8.2;
+    border-radius: 18px; overflow: hidden; cursor: pointer;
+    background: linear-gradient(180deg, #0a1030 0%, #233c74 58%, #2c4a80 100%);
+    border: 3px solid #22304f;
+    user-select: none; -webkit-user-select: none; touch-action: manipulation;
+  }
+  #bulan {
+    position: absolute; top: 7%; right: 8%; width: 92px; height: 92px;
+    border-radius: 50%; background: #f5f2d6;
+    box-shadow: 0 0 44px 16px rgba(245,242,200,.35);
+  }
+  .bintang {
+    position: absolute; background: #fff; border-radius: 50%;
+    animation: kelip 2.6s ease-in-out infinite alternate;
+  }
+  @keyframes kelip { from { opacity: .25; } to { opacity: 1; } }
+  #gunung { position: absolute; left: 0; bottom: 9%; width: 100%; height: 46%; }
+  #bukit {
+    position: absolute; left: -10%; bottom: -24%; width: 120%; height: 46%;
+    border-radius: 50%; background: #14231e;
+  }
+  #tanah {
+    position: absolute; left: 0; bottom: 0; width: 100%; height: 15%;
+    background-image: radial-gradient(circle, rgba(120,160,135,.5) 2px, transparent 2.6px);
+    background-size: 150px 34px; background-repeat: repeat-x; background-position: 0 12px;
+  }
+  .pinus { position: absolute; bottom: 11%; width: 54px; opacity: .92; }
+
+  #gelembung {
+    position: absolute; left: 15%; top: 6%; z-index: 5;
+    background: #fff; color: #22304f; font-family: 'Fredoka', sans-serif; font-weight: 600;
+    padding: 8px 15px; border-radius: 16px; border: 3px solid #22304f;
+    box-shadow: 3px 3px 0 rgba(34,48,79,.8); font-size: .98rem;
+    animation: memantul 1.8s ease-in-out infinite;
+  }
+  #gelembung::after {
+    content: ''; position: absolute; left: 34px; bottom: -12px;
+    border: 7px solid transparent; border-top: 10px solid #22304f;
+  }
+  @keyframes memantul { 0%,100% { transform: translateY(0) rotate(-2deg); } 50% { transform: translateY(-5px) rotate(1deg); } }
+  #gelembung.berteriak { animation: teriak .3s ease-in-out infinite; background: #ffe066; }
+  @keyframes teriak { 0%,100% { transform: scale(1) rotate(-2deg); } 50% { transform: scale(1.09) rotate(2deg); } }
+
+  .grup-serigala {
+    position: absolute; left: 13%; bottom: 7.5%; width: 60%;
+    transition: opacity .35s ease;
+  }
+  .grup-serigala img.lapisan { position: absolute; left: 0; top: 0; width: 100%; will-change: transform; }
+  .grup-serigala img.rangka { position: relative; width: 100%; visibility: hidden; display: block; }
+  #grupAung { opacity: 0; pointer-events: none; width: 58%; left: 14%; }
+  #grupAung img.rangka { visibility: visible; position: relative; }
+
+  .gelombang {
+    position: absolute; border: 4px solid rgba(255,255,220,.9); border-radius: 50%;
+    transform: translate(-50%, -50%); opacity: 0; pointer-events: none;
+  }
+  .partikel {
+    position: absolute; z-index: 6; pointer-events: none; font-size: 20px;
+    animation: ledak .85s ease-out forwards;
+  }
+  @keyframes ledak {
+    from { transform: translate(0,0) scale(.4) rotate(0deg); opacity: 1; }
+    to { transform: translate(var(--dx), var(--dy)) scale(1.25) rotate(var(--rot)); opacity: 0; }
+  }
+
+  #eq {
+    position: absolute; right: 14px; bottom: 12px; display: flex; gap: 4px;
+    align-items: flex-end; height: 44px;
+  }
+  #eq span { width: 7px; background: #ffe9a8; border-radius: 3px; height: 12%; transition: height .07s linear; }
+
+  .klik-hint {
+    text-align: center; font-family: 'Fredoka', sans-serif; font-weight: 600;
+    font-size: 1.2rem; margin: 18px 0 10px; color: #22304f;
+  }
+  #btnAung {
+    font-family: 'Fredoka', sans-serif; font-weight: 700; font-size: 1.05rem;
+    background: #ff5964; color: #fff; border: 3px solid #22304f; border-radius: 999px;
+    padding: 10px 28px; cursor: pointer; box-shadow: 4px 4px 0 #22304f;
+    transition: transform .12s ease, box-shadow .12s ease;
+  }
+  #btnAung:hover { transform: translate(-1px,-1px); box-shadow: 5px 5px 0 #22304f; }
+  #btnAung:active { transform: translate(3px,3px); box-shadow: 1px 1px 0 #22304f; }
+  .tengah { text-align: center; }
+
+  .kontrol {
+    display: flex; flex-wrap: wrap; gap: 14px 18px; justify-content: center;
+    margin: 16px auto 8px; max-width: 720px;
+  }
+  .kontrol label {
+    display: flex; align-items: center; gap: 10px; font-weight: 800; color: #22304f;
+    background: #fff; border: 3px solid #22304f; border-radius: 999px;
+    padding: 9px 18px; box-shadow: 4px 4px 0 #22304f; font-size: .95rem;
+  }
+  .kontrol input[type="range"] { width: 150px; }
+  #sliderCepat { accent-color: #ff5964; }
+  #sliderVol { accent-color: #00a896; }
+  .tips { text-align: center; color: #47609c; font-weight: 700; font-size: .92rem; }
+  .tips code, section code {
+    background: #22304f; padding: 2px 9px; border-radius: 7px;
+    font-family: Consolas, monospace; color: #ffe9a8; font-size: .92em;
+  }
+
+  section {
+    background: #fff; border: 3px solid #22304f; border-radius: 22px;
+    box-shadow: 7px 7px 0 #22304f; padding: 22px 24px; margin-top: 26px;
+  }
+  section h2, section h3 { font-family: 'Fredoka', sans-serif; color: #22304f; margin-bottom: 10px; }
+  section h3 { font-size: 1.25rem; }
+  .nomor {
+    display: inline-flex; width: 34px; height: 34px; border-radius: 50%;
+    align-items: center; justify-content: center; color: #22304f;
+    border: 3px solid #22304f; margin-right: 9px; font-size: 1.05rem; vertical-align: -8px;
+  }
+  .n1 { background: #7bdff2; } .n2 { background: #ffb3d9; } .n3 { background: #b8f1cc; }
+  section p, section li { color: #3d4f78; line-height: 1.68; font-size: .98rem; font-weight: 600; }
+  section ul, section ol { padding-left: 20px; }
+  .player { border: 3px solid #22304f; border-radius: 16px; overflow: hidden; margin-top: 10px; background: #000; }
+  .player video { width: 100%; display: block; }
+  pre {
+    background: #22304f; border-radius: 14px; padding: 13px 16px;
+    overflow-x: auto; margin-top: 12px;
+  }
+  pre code { background: none; padding: 0; color: #cfe3ff; }
+  .unduh { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 14px; }
+  .unduh a {
+    color: #22304f; background: #ffe066; text-decoration: none; font-weight: 900;
+    padding: 9px 17px; border-radius: 999px; font-size: .9rem;
+    border: 3px solid #22304f; box-shadow: 3px 3px 0 #22304f;
+    transition: transform .12s ease, box-shadow .12s ease;
+  }
+  .unduh a:nth-child(2n) { background: #7bdff2; }
+  .unduh a:nth-child(3n) { background: #ffb3d9; }
+  .unduh a:hover { transform: translate(-1px,-1px); box-shadow: 4px 4px 0 #22304f; }
+  footer { text-align: center; color: #47609c; font-weight: 700; font-size: .86rem; margin-top: 30px; }
+  @media (max-width: 560px) {
+    header h1 { font-size: 2rem; }
+    #gelembung { font-size: .8rem; left: 6%; }
+    #bulan { width: 56px; height: 56px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <span class="jejak" style="left:2%; top:120px;">🐾</span>
+  <span class="jejak" style="right:3%; top:300px; transform: rotate(14deg);">🐾</span>
+  <span class="jejak" style="left:4%; bottom:180px; transform: rotate(10deg);">🐾</span>
+
+  <header>
+    <h1>🐺 WOLFY si Serigala!</h1>
+    <p>Proyek Multimedia: Gambar Bergerak dan Bersuara</p>
+  </header>
+  <div class="identitas">Muhamad Nabil Faiz Amrullah | NIM 242502040042 | Kelas 3TI01</div>
+
+  <div class="stiker-bar">
+    <span class="stiker pink">✨ Tugas Multimedia</span>
+    <span class="stiker hijau">🐍 Dibuat Pakai Python</span>
+    <span class="stiker kuning">🌕 Awas, Dia Mengaum!</span>
+  </div>
+
+  <div id="bingkai">
+    <div id="panggung" title="Klik untuk mengaum">
+      <div id="bulan"></div>
+      <svg id="gunung" viewBox="0 0 1280 330" preserveAspectRatio="none">
+        <polygon points="0,230 180,90 340,200 520,80 700,210 880,100 1050,215 1280,120 1280,330 0,330" fill="#26345a"/>
+      </svg>
+      <div id="bukit"></div>
+      <div id="tanah"></div>
+      <div id="gelembung"><span id="teksGelembung">Psst... klik aku, aku bisa mengaum! 🎤</span></div>
+      <div id="grupJalan" class="grup-serigala"></div>
+      <div id="grupAung" class="grup-serigala">
+        <img class="rangka" src="serigala_aung.png" alt="Serigala mengaung">
+        <div class="gelombang" id="gel0"></div>
+        <div class="gelombang" id="gel1"></div>
+        <div class="gelombang" id="gel2"></div>
+      </div>
+      <div id="eq"><span></span><span></span><span></span><span></span><span></span></div>
+    </div>
+  </div>
+
+  <p class="klik-hint">👆 Klik serigalanya, dia lagi jalan-jalan santai tuh!</p>
+  <div class="tengah"><button id="btnAung" type="button">🔊 Mengaum Sekarang!</button></div>
+
+  <div class="kontrol">
+    <label>🏃 Kecepatan <input type="range" id="sliderCepat" min="0" max="2" step="0.1" value="1"> <span id="nilaiCepat">1.0x</span></label>
+    <label>🔊 Volume <input type="range" id="sliderVol" min="0" max="100" step="1" value="90"> <span id="nilaiVol">90%</span></label>
+  </div>
+  <p class="tips">Tips: tekan <code>Spasi</code> untuk mengaum tanpa klik!</p>
+
+  <section>
+    <h3><span class="nomor n1">1</span>Gambar 🖼️</h3>
+    <p>
+      Visual serigala memakai dua gambar PNG, pose berjalan dan pose melolong. Background putih
+      kedua gambar dihapus dengan program Python (metode flood-fill dari tepi gambar) sehingga
+      menjadi transparan. Khusus pose berjalan, gambar dipotong lagi menjadi badan dan 4 kaki
+      terpisah, sama seperti boneka animasi 2D, supaya kakinya bisa digerakkan satu per satu.
+    </p>
+  </section>
+
+  <section>
+    <h3><span class="nomor n2">2</span>Suara 🔊</h3>
+    <p>
+      Aungan khas serigala diputar lewat <b>HTML5 Audio</b> dari rekaman lolongan serigala asli.
+      Suara dianalisis memakai <b>Web Audio API</b> sehingga gelombang suara di mulut, equalizer
+      di pojok panggung, denyut cahaya bulan, dan getaran layar ikut bergerak sesuai kerasnya suara.
+    </p>
+  </section>
+
+  <section>
+    <h3><span class="nomor n3">3</span>Gerak 🏃</h3>
+    <p>
+      Animasi <b>CSS + JavaScript</b>: berjalan dengan teknik walk cycle (setiap kaki diputar
+      bergantian pada poros pangkalnya dengan pola trot, yaitu kaki diagonal bergerak sefase),
+      badan naik-turun mengikuti langkah, pohon dan tanah bergeser (efek parallax), bintang
+      berkelip, dan saat mengaum serigala berganti pose, kepalanya mendongak ke bulan.
+    </p>
+  </section>
+
+  <section>
+    <h2>🎬 Versi Video (Dibuat dengan Python)</h2>
+    <p>
+      Animasi yang sama juga dibuat sebagai video MP4 dengan program Python
+      (Pillow, NumPy, SciPy, dan FFmpeg): 420 frame dirender satu per satu lalu digabung
+      dengan suara lolongannya.
+    </p>
+    <div class="player">
+      <video controls poster="poster.jpg" preload="metadata">
+        <source src="serigala_bergerak.mp4" type="video/mp4">
+        Browser Anda tidak mendukung pemutaran video.
+      </video>
+    </div>
+    <pre><code>pip install pillow numpy scipy
+python buat_serigala_bergerak.py</code></pre>
+    <div class="unduh">
+      <a href="serigala_bergerak.mp4" download>🎥 Video MP4</a>
+      <a href="buat_serigala_bergerak.py" download>🐍 Kode Python</a>
+      <a href="serigala_jalan.png" download>🚶 Pose Berjalan</a>
+      <a href="serigala.png" download>🌕 Pose Melolong</a>
+      <a href="lolongan_serigala.mp3" download>🎵 Suara Lolongan</a>
+    </div>
+  </section>
+
+  <footer>Dibuat dengan ❤️ dan Python | Suara lolongan: rekaman "Wolf howls", Wikimedia Commons 🐺</footer>
+</div>
+
+<audio id="audioAung" src="aungan.mp3" preload="auto"></audio>
+<script src="rig.js"></script>
+<script>
+(function () {
+  const panggung = document.getElementById('panggung');
+  const grupJalan = document.getElementById('grupJalan');
+  const grupAung = document.getElementById('grupAung');
+  const bulan = document.getElementById('bulan');
+  const tanah = document.getElementById('tanah');
+  const audio = document.getElementById('audioAung');
+  const eqBars = document.querySelectorAll('#eq span');
+  const gelombang = [0, 1, 2].map(i => document.getElementById('gel' + i));
+  const gelembung = document.getElementById('gelembung');
+  const teksGelembung = document.getElementById('teksGelembung');
+
+  // --- Bintang ---
+  for (let i = 0; i < 90; i++) {
+    const b = document.createElement('span');
+    b.className = 'bintang';
+    const uk = (Math.random() * 2 + 1).toFixed(1);
+    b.style.width = b.style.height = uk + 'px';
+    b.style.left = (Math.random() * 100) + '%';
+    b.style.top = (Math.random() * 52) + '%';
+    b.style.animationDelay = (Math.random() * 2.5) + 's';
+    panggung.insertBefore(b, panggung.firstChild);
+  }
+
+  // --- Pohon pinus (parallax) ---
+  const svgPinus = '<svg viewBox="0 0 60 110" xmlns="http://www.w3.org/2000/svg">' +
+    '<rect x="27" y="88" width="6" height="20" fill="#0a1210"/>' +
+    '<polygon points="30,0 52,48 8,48" fill="#0a1210"/>' +
+    '<polygon points="30,26 56,76 4,76" fill="#0a1210"/>' +
+    '<polygon points="30,52 60,102 0,102" fill="#0a1210"/></svg>';
+  const pinus = [];
+  [[70, 120], [150, 88], [1030, 108], [1130, 82], [1210, 128]].forEach(function (konfig) {
+    const el = document.createElement('div');
+    el.className = 'pinus';
+    el.innerHTML = svgPinus;
+    el.style.width = (konfig[1] * 0.5) + 'px';
+    panggung.appendChild(el);
+    pinus.push({ el: el, x: konfig[0] });
+  });
+
+  // --- Rakit serigala berjalan dari lapisan badan + kaki ---
+  const imgKaki = RIG_KAKI.map(function (k) {
+    const img = document.createElement('img');
+    img.src = k.file; img.alt = ''; img.className = 'lapisan';
+    img.style.transformOrigin = k.porosX + '% ' + k.porosY + '%';
+    img.style.zIndex = 1;
+    grupJalan.appendChild(img);
+    return { img: img, fase: k.fase };
+  });
+  const rangka = document.createElement('img');
+  rangka.src = 'badan.png'; rangka.alt = 'Serigala berjalan'; rangka.className = 'rangka';
+  grupJalan.appendChild(rangka);
+  const imgBadan = document.createElement('img');
+  imgBadan.src = 'badan.png'; imgBadan.alt = ''; imgBadan.className = 'lapisan';
+  imgBadan.style.zIndex = 2;
+  grupJalan.appendChild(imgBadan);
+
+  // --- Audio: Web Audio API (analyser + gain) ---
+  const sliderCepat = document.getElementById('sliderCepat');
+  const sliderVol = document.getElementById('sliderVol');
+  let ctxAudio = null, analyser = null, gainNode = null, dataFrekuensi = null;
+  function siapkanAudio() {
+    if (ctxAudio) { ctxAudio.resume(); return; }
+    try {
+      ctxAudio = new (window.AudioContext || window.webkitAudioContext)();
+      const sumber = ctxAudio.createMediaElementSource(audio);
+      analyser = ctxAudio.createAnalyser();
+      analyser.fftSize = 64;
+      dataFrekuensi = new Uint8Array(analyser.frequencyBinCount);
+      gainNode = ctxAudio.createGain();
+      gainNode.gain.value = sliderVol.value / 100;
+      sumber.connect(analyser); analyser.connect(gainNode); gainNode.connect(ctxAudio.destination);
+    } catch (e) {
+      audio.volume = sliderVol.value / 100;
+    }
+  }
+  function levelSuara() {
+    if (!analyser) return 0;
+    analyser.getByteFrequencyData(dataFrekuensi);
+    let total = 0;
+    for (let i = 0; i < dataFrekuensi.length; i++) total += dataFrekuensi[i];
+    return total / dataFrekuensi.length / 255;
+  }
+
+  // --- Kontrol ---
+  sliderCepat.addEventListener('input', function () {
+    document.getElementById('nilaiCepat').textContent = Number(sliderCepat.value).toFixed(1) + 'x';
+  });
+  sliderVol.addEventListener('input', function () {
+    document.getElementById('nilaiVol').textContent = sliderVol.value + '%';
+    if (gainNode) gainNode.gain.value = sliderVol.value / 100; else audio.volume = sliderVol.value / 100;
+  });
+
+  // --- Ledakan partikel playful dari mulut serigala ---
+  function ledakanPartikel() {
+    const simbol = ['✦', '🐾', '♪', '✧', '💛', '⭐'];
+    for (let i = 0; i < 12; i++) {
+      const s = document.createElement('span');
+      s.className = 'partikel';
+      s.textContent = simbol[i % simbol.length];
+      s.style.left = '64%';
+      s.style.top = '9%';
+      s.style.setProperty('--dx', ((Math.random() - 0.3) * 190).toFixed(0) + 'px');
+      s.style.setProperty('--dy', ((Math.random() - 0.75) * 150).toFixed(0) + 'px');
+      s.style.setProperty('--rot', ((Math.random() - 0.5) * 160).toFixed(0) + 'deg');
+      panggung.appendChild(s);
+      setTimeout(function () { s.remove(); }, 900);
+    }
+  }
+
+  // --- Mengaum ---
+  let mode = 'jalan';
+  function mengaum() {
+    if (mode === 'aung') return;
+    siapkanAudio();
+    mode = 'aung';
+    grupJalan.style.opacity = 0;
+    grupAung.style.opacity = 1;
+    teksGelembung.textContent = 'AUUUUUU! 🌕';
+    gelembung.classList.add('berteriak');
+    ledakanPartikel();
+    audio.currentTime = 0;
+    audio.play();
+  }
+  audio.addEventListener('ended', function () {
+    mode = 'jalan';
+    grupJalan.style.opacity = 1;
+    grupAung.style.opacity = 0;
+    teksGelembung.textContent = 'Psst... klik aku, aku bisa mengaum! 🎤';
+    gelembung.classList.remove('berteriak');
+    gelombang.forEach(function (g) { g.style.opacity = 0; });
+  });
+  panggung.addEventListener('click', mengaum);
+  document.getElementById('btnAung').addEventListener('click', mengaum);
+  document.addEventListener('keydown', function (e) {
+    if (e.code === 'Space') { e.preventDefault(); mengaum(); }
+  });
+
+  // --- Loop animasi ---
+  let fase = 0, geserTanah = 0, terakhir = performance.now();
+  function putar(sekarang) {
+    const dt = Math.min(0.05, (sekarang - terakhir) / 1000);
+    terakhir = sekarang;
+    const cepat = Number(sliderCepat.value);
+    const level = (mode === 'aung') ? levelSuara() : 0;
+
+    if (mode === 'jalan') {
+      fase += dt * cepat * (2 * Math.PI / 0.85);
+      geserTanah += dt * cepat * 130;
+      imgKaki.forEach(function (k) {
+        k.img.style.transform = 'rotate(' + (8 * Math.sin(fase + k.fase)).toFixed(2) + 'deg)';
+      });
+      const bob = -Math.abs(Math.sin(fase)) * 1.4;
+      grupJalan.style.transform = 'translateY(' + bob.toFixed(2) + '%)';
+      tanah.style.backgroundPosition = (-geserTanah % 150) + 'px 12px';
+      pinus.forEach(function (p) {
+        p.x -= dt * cepat * 42;
+        if (p.x < -70) p.x += 1350;
+        p.el.style.left = p.x + 'px';
+      });
+      eqBars.forEach(b => b.style.height = '12%');
+      panggung.style.transform = '';
+      bulan.style.transform = '';
+    } else {
+      imgKaki.forEach(function (k) { k.img.style.transform = 'rotate(0deg)'; });
+      const denyut = 1 + level * 0.05;
+      grupAung.style.transform = 'scale(' + denyut.toFixed(3) + ')';
+      bulan.style.transform = 'scale(' + (1 + level * 0.13).toFixed(3) + ')';
+      if (level > 0.02) {
+        const gx = (Math.random() - 0.5) * level * 7;
+        const gy = (Math.random() - 0.5) * level * 5;
+        panggung.style.transform = 'translate(' + gx.toFixed(1) + 'px,' + gy.toFixed(1) + 'px)';
+      } else {
+        panggung.style.transform = '';
+      }
+      const t = sekarang / 1000;
+      gelombang.forEach(function (g, i) {
+        const f = (t * 0.9 + i / 3) % 1;
+        const ukuran = 30 + f * 150;
+        g.style.left = '86%'; g.style.top = '9%';
+        g.style.width = g.style.height = ukuran + 'px';
+        g.style.opacity = (Math.max(0, (1 - f)) * (0.25 + level * 1.1)).toFixed(2);
+      });
+      if (analyser) {
+        analyser.getByteFrequencyData(dataFrekuensi);
+        eqBars.forEach(function (b, i) {
+          const v = dataFrekuensi[1 + i * 2] / 255;
+          b.style.height = (12 + v * 85) + '%';
+        });
+      }
+    }
+    requestAnimationFrame(putar);
+  }
+  requestAnimationFrame(putar);
+})();
+</script>
+</body>
+</html>
